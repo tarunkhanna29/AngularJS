@@ -1,0 +1,18 @@
+$scope v/s this
+===============
+Any function variables linked with this keyword are not available to view via directives, filters, ng-click etc. 
+$scope attaches methods/variables to model and model is available to directives/filters and not this keyword.
+
+ng-if v/s ng-show
+=================
+ng-if will remove element from dom when false but ng-show will not.
+So, if any action/event handler is defined on element that is under ng-if and once, it is deleted from dom - that action will be removed and that action will never happen even if ng-if is true later and element is shown again. 
+ng-show -> element remains in dom. It's just hide/show.
+
+Child vs Parent Controller
+==========================
+Child Controller will be able to access scope of parent controller but not vice versa.
+
+Scope
+=====
+ng-controller and ng-include creates new scope.

@@ -1,0 +1,84 @@
+    <div class="container" ng-controller="DishDetailController">
+        <div class="row row-content">
+            <div class="col-xs-12">
+              <button class="btn btn-xs btn-primary pull-right" type="button" ui-sref="app.menu">
+                Back to Menu
+              </button>
+                <div class="media-left media-middle">
+                    <a ui-sref="app.dishdetails({id : dish.id})">
+                      <img class="media-object img-thumbnail" ng-src={{dish.image}} alt="Uthapizza">
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h2 class="media-heading">{{dish.name}}
+                    <span class="label label-danger label-xs">{{dish.label}}</span>
+                    <span class="badge">{{dish.price | currency:"Rs"}}</span>
+                    </h2>
+                    <p>{{dish.description}}</p>
+                    </p>
+                  </div>    
+
+            </div>
+            <div class="col-xs-9 col-xs-offset-1">
+                <p><B>Customer Comments</B> Sort by: 
+                <input type="text" ng-model="filterText">
+                </p>
+
+                <ul class="media-list tab-pane fade in active">
+                  <li class="media" ng-repeat="commentObj in dish.comments | orderBy : filterText">
+                    <div class="media-body">
+                      <div>{{commentObj.rating}}</div>
+                      <div>{{commentObj.comment}}</div>
+                      <div class="text-muted">{{commentObj.author}}, {{commentObj.date}}</div>
+                    </div>
+                  </li>
+                  <li class="media">
+                    <div class="media-body">
+                      <div>{{comment.stars}} Stars</div>
+                      <div>{{comment.yourComments}}</div>
+                      <div class="text-muted">{{comment.yourName}}, {{date}}</div>
+                    </div>
+                  </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <form class="form-horizontal" role="form" name="addCommentForm" ng-submit="addComment()" novalidate>
+          <div class="form-group" ng-class="{ 'has-error' : addCommentForm.yourName.$error.required && !addCommentForm.yourName.$pristine}">
+            <label for="yourName" class="col-sm-2 control-label">Your Name</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="yourName" name="yourName" placeholder="Enter Your Name" ng-model="comment.yourName" required>
+            <span ng-show="addCommentForm.yourName.$error.required && !addCommentForm.yourName.$pristine" class="help-block">
+            Your name is required.
+            </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="yourComments" class="col-sm-2 control-label">Number of Stars</label>
+            <div class="col-sm-10">
+            <div ng-init="comment.stars=5" />
+            <label><input type="radio" name="stars" value="1" ng-model="comment.stars"> 1<br></label>
+            <label><input type="radio" name="stars" value="2" ng-model="comment.stars"> 2<br></label>
+            <label><input type="radio" name="stars" value="3" ng-model="comment.stars"> 3<br></label>
+            <label><input type="radio" name="stars" value="4" ng-model="comment.stars"> 4<br></label>
+            <label><input type="radio" name="stars" value="5" ng-model="comment.stars" ng-checked="true"> 5<br></label>
+            </div>
+          </div>           
+          <div class="form-group" ng-class="{ 'has-error' : addCommentForm.yourComments.$error.required && !addCommentForm.yourComments.$pristine}">
+            <label for="yourComments" class="col-sm-2 control-label">Your Comments</label>
+            <div class="col-sm-10">
+            <textarea class="form-control" id="yourComments" name="yourComments" rows="12" ng-model="comment.yourComments" required></textarea>
+            <span ng-show="addCommentForm.yourComments.$error.required && !addCommentForm.yourComments.$pristine" class="help-block">
+            Your comments are required.
+            </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary" ng-disabled="addCommentForm.$invalid">Submit</button>
+            </div>
+          </div>                    
+        </form>
+
+    </div>
